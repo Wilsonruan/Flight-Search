@@ -10,6 +10,6 @@ function travelers () {
 
 }
 
-function search () {
-    
+function searchFlight () {
+
 }

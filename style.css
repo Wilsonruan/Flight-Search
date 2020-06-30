@@ -1,0 +1,33 @@
+body {
+  background-image: url("flight_img.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.jumbotron {
+  background-color: #1d258c;
+}
+
+.navbar {
+  background-color: #1d258c;
+}
+
+.display1 {
+  display: flex;
+  text-align: center;
+  font-family: cursive;
+}
+
+.fa-plane {
+  font-size: 35px;
+  color: white;
+}
+
+#search-flight {
+  background-color: teal;
+  border-style: none;
+  color: white;
+  font-weight: bold;
+  border-spacing: 20px;
+}

@@ -1,3 +1,3 @@
 # Flight-Search
 
-https://github.com/Wilsonruan/Flight-Search.git
+https://wilsonruan.github.io/Flight-Search/

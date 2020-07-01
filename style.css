@@ -31,3 +31,15 @@ body {
   font-weight: bold;
   border-spacing: 20px;
 }
+
+input {
+  border-radius: 3px;
+  border-style: none;
+}
+
+.travelerClass {
+  display: none;
+  background-color: white;
+  width: 350px;
+  float: right;
+}

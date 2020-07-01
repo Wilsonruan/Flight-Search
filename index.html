@@ -20,7 +20,7 @@
     />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="plane.ico" />
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
   </head>
 
   <body>
@@ -38,10 +38,46 @@
       <input id="to-location" type="text" placeholder="Flying to.." />
       <input id="depart-from" type="text" placeholder="Departing.." />
       <input id="return-to" type="text" placeholder="Returning.." />
-      <input id="travelers" type="text" placeholder="Travelers.." />
-      <button class="btn btn-warning" id="search-flight">
+      <input id="travelers" type="button" value="1 traveler" />
+      <button class="btn" id="search-flight">
         Search flight
       </button>
+      <div class="travelerClass" id="travel" data-toggle="collapse">
+        <table class="table table-borderless table-responsive-sm">
+          <tbody>
+            <tr>
+              <td><b>Adults:</b></td>
+              <td>
+                <button class="btn btn-outline-secondary" id="decrementAdult">
+                  -
+                </button>
+              </td>
+              <td id="adultCount">1</td>
+              <td>
+                <button class="btn btn-outline-secondary" id="incrementAdult">
+                  +
+                </button>
+              </td>
+              <td><b>16+ years</b></td>
+            </tr>
+            <tr>
+              <td><b>Children:</b></td>
+              <td>
+                <button class="btn btn-outline-secondary" id="decrementChild">
+                  -
+                </button>
+              </td>
+              <td id="childCount">0</td>
+              <td>
+                <button class="btn btn-outline-secondary" id="incrementChild">
+                  +
+                </button>
+              </td>
+              <td><b>0-15 years</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script
@@ -62,5 +98,6 @@
     ></script>
     <script src="javascript.js"></script>
     <script src="datepicker.js"></script>
+    <script src="travelers.js"></script>
   </body>
 </html>

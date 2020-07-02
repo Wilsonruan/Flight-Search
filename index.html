@@ -20,7 +20,6 @@
     />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="plane.ico" />
-
   </head>
 
   <body>
@@ -33,13 +32,13 @@
     <div class="container jumbotron">
       <input id="from-location" type="text" placeholder="Flying from.." />
       <button type="button" id="button-swap">
-        <i class="fas fa-exchange-alt"></i>
-    </button>
+        <i class="fa fa-exchange-alt"></i>
+      </button>
       <input id="to-location" type="text" placeholder="Flying to.." />
       <input id="depart-from" type="text" placeholder="Departing.." />
       <input id="return-to" type="text" placeholder="Returning.." />
       <input id="travelers" type="button" value="1 traveler" />
-      <button class="btn" id="search-flight">
+      <button class="btn" id="search-flight" onclick="flightFinder()">
         Search flight
       </button>
       <div class="travelerClass" id="travel" data-toggle="collapse">
@@ -108,5 +107,6 @@
     <script src="javascript.js"></script>
     <script src="datepicker.js"></script>
     <script src="travelers.js"></script>
+    <script src="flight-finder.js"></script>
   </body>
 </html>

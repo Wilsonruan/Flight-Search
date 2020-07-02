@@ -20,7 +20,7 @@
     />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" type="image/png" href="plane.ico" />
-
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   </head>
 
   <body>
@@ -31,14 +31,28 @@
     </nav>
     <h1 class="display1 justify-content-center">Where to next ?</h1>
     <div class="container jumbotron">
-      <input id="from-location" type="text" placeholder="Flying from.." />
-      <button type="button" id="button-swap">
-        <i class="fas fa-exchange-alt"></i>
-    </button>
-      <input id="to-location" type="text" placeholder="Flying to.." />
-      <input id="depart-from" type="text" placeholder="Departing.." />
-      <input id="return-to" type="text" placeholder="Returning.." />
-      <input id="travelers" type="button" value="1 traveler" />
+      <div class="input-group">
+        <input id="from-location" type="text" placeholder="Flying from.." />
+        <div class="input-group-append">
+          <button type="button" id="button-swap" class="btn btn-primary">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+        <input id="to-location" type="text" placeholder="Flying to.." />
+        <input id="depart-from" type="text" placeholder="Departing.." />
+        <div class="input-group-append">
+          <button class="btn btn-primary">
+            <i class="fas fa-calendar"></i>
+          </button>
+        </div>
+        <input id="return-to" type="text" placeholder="Returning.." />
+        <div class="input-group-append">
+          <button class="btn btn-primary">
+            <i class="fas fa-calendar"></i>
+          </button>
+        </div>
+        <input id="travelers" type="text" placeholder="Travelers.." />
+      </div>
       <button class="btn" id="search-flight">
         Search flight
       </button>

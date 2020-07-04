@@ -1,19 +1,3 @@
-$(document).ready(() => {
-  airportInfoAPI($('#to-location'), $('#to-location-code'));
-  airportInfoAPI($('#from-location'), $('#from-location-code'));
-
-  $('#button-swap').click(() => {
-    const toLocation = $('#to-location').val();
-    const fromLocation = $('#from-location').val();
-    const toLocationCode = $('#to-location-code').text();
-    const fromLocationCode = $('#from-location-code').text();
-    $('#to-location').val(fromLocation);
-    $('#from-location').val(toLocation);
-    $('#to-location-code').text(fromLocationCode)
-    $('#from-location-code').text(toLocationCode)
-  });
-});
-
 function airportInfoAPI(airportInfo, codeName) {
   airportInfo.focusout(() => {
     const airportLocation = airportInfo.val();
@@ -33,3 +17,33 @@ function airportInfoAPI(airportInfo, codeName) {
     });
   });
 }
+
+$(document).ready(() => {
+var fromAirport = $( "#from-location" ),
+    toAirport = $( "#to-location" )
+
+    lookupAirports().then(function( data ) {
+      fromAirport.add( toAirport )
+          .autocomplete({
+              source: data.airports,
+              minLength: 2
+          });
+  });
+  airportInfoAPI($('#to-location'), $('#to-location-code'));
+  airportInfoAPI($('#from-location'), $('#from-location-code'));
+
+    $('#button-swap').click(() => {
+    const toLocation = $('#to-location').val();
+    const fromLocation = $('#from-location').val();
+    const toLocationCode = $('#to-location-code').text();
+    const fromLocationCode = $('#from-location-code').text();
+    $('#to-location').val(fromLocation);
+    $('#from-location').val(toLocation);
+    $('#to-location-code').text(fromLocationCode)
+    $('#from-location-code').text(toLocationCode)
+  });
+});
+
+function lookupAirports() {
+    return $.getJSON( "https://rawgit.com/tjvantoll/jquery-ui-in-action-demos/master/chapter-11/json/airports.json" );
+};

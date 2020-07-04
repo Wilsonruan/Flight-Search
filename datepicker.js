@@ -20,4 +20,16 @@ $(document).ready(() => {
     minDate: '0D',
     maxDate: '+2Y',
   });
+
+  $("#btn-return-to").click(function() {
+    $('#return-to').datepicker(
+      'show'
+    );
+  })
+
+  $("#btn-depart-from").click(function() {
+    $('#depart-from').datepicker(
+      'show'
+    );
+  })
 });

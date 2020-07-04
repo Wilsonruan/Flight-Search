@@ -18,6 +18,10 @@ function airportInfoAPI(airportInfo, codeName) {
   });
 }
 
+function lookupAirports() {
+  return $.getJSON( "https://rawgit.com/tjvantoll/jquery-ui-in-action-demos/master/chapter-11/json/airports.json" );
+};
+
 $(document).ready(() => {
 var fromAirport = $( "#from-location" ),
     toAirport = $( "#to-location" )
@@ -29,21 +33,17 @@ var fromAirport = $( "#from-location" ),
               minLength: 2
           });
   });
-  airportInfoAPI($('#to-location'), $('#to-location-code'));
-  airportInfoAPI($('#from-location'), $('#from-location-code'));
+  airportInfoAPI(toAirport, $('#to-location-code'));
+  airportInfoAPI(fromAirport, $('#from-location-code'));
 
     $('#button-swap').click(() => {
-    const toLocation = $('#to-location').val();
-    const fromLocation = $('#from-location').val();
+    const toLocation = toAirport.val();
+    const fromLocation = fromAirport.val();
     const toLocationCode = $('#to-location-code').text();
     const fromLocationCode = $('#from-location-code').text();
-    $('#to-location').val(fromLocation);
-    $('#from-location').val(toLocation);
+    toAirport.val(fromLocation);
+    fromAirport.val(toLocation);
     $('#to-location-code').text(fromLocationCode)
     $('#from-location-code').text(toLocationCode)
   });
 });
-
-function lookupAirports() {
-    return $.getJSON( "https://rawgit.com/tjvantoll/jquery-ui-in-action-demos/master/chapter-11/json/airports.json" );
-};

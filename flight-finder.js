@@ -1,11 +1,24 @@
+function getUrlVars() {
+  const queryString = {};
+  let key;
+  let val;
+  const queryParams = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+  for (let i = 0; i < queryParams.length; i += 1) {
+    [key, val] = queryParams[i].split('=');
+    queryString[key] = val;
+  }
+  return queryString;
+}
+
 // Clicking on search button, call this function
 function flightFinder() {
-  const originPlace = $('#from-location').val();
-  const destinationPlace = $('#to-location').val();
-  const outboundDate = $('#depart-from').val();
-  const inboundDate = $('#return-to').val();
+  const queryString = getUrlVars();
+  const originPlace = 'SFO-sky' || queryString['from-location'];
+  const destinationPlace = 'JFK-sky' || queryString['to-location'];
+  const outboundDate = queryString['depart-from'];
+  const inboundDate = queryString['return-to'];
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/CA/CAD/en-US/${originPlace}/${destinationPlace}/${outboundDate}/${inboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
 
   $.ajax({
     url: queryURL,
@@ -17,5 +30,14 @@ function flightFinder() {
     },
   }).then((response) => {
     console.log(response);
+    $('#airlines-name').html(response.Carriers[0].Name);
+    $('#origin-code').html(response.Places[0].IataCode);
+    $('#origin-name').html(response.Places[0].Name);
+    $('#destination-code').html(response.Places[1].IataCode);
+    $('#destination-name').html(response.Places[1].Name);
   });
 }
+
+$(document).ready(() => {
+  flightFinder();
+});

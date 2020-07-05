@@ -19,9 +19,10 @@
     <span class="navbar-brand mb-0 h1">flYjet <i class="fa fa-plane"></i></span>
   </nav>
   <h1 class="display1 justify-content-center">Where to next ?</h1>
-  <div class="container jumbotron row">
-    <!-- <form action="resultsPage.html" method="GET" autocomplete="off"> -->
-      <div class="input-group mb-3 col-2">
+  <div class="container jumbotron">
+    <form action="resultsPage.html" method="GET" autocomplete="off">
+      <div class="row">
+      <div class="input-group mb-3 col-12 col-md-3">
         <input id="from-location" class="form-control" name="from-location" type="text" placeholder="Flying from.." required/>
         <div class="input-group-append">
           <button type="button" id="button-swap" class="btn btn-primary">
@@ -29,10 +30,15 @@
           </button>
         </div>
       </div>
-      <div class="input-group mb-3 col-2">
+      <div class="input-group mb-3 col-12 col-md-3">
         <input id="to-location" class="form-control" name="to-location" type="text" placeholder="Flying to.." required/>
+        <div class="input-group-append">
+          <button type="button" id="button-swap2" class="btn btn-primary">
+            <i class="fas fa-exchange-alt"></i>
+          </button>
+        </div>
       </div>
-      <div class="input-group mb-3 col-2">
+      <div class="input-group mb-3 col-12 col-md-2">
         <input id="depart-from" class="form-control" name="depart-from" type="text" placeholder="Departing.." required/>
         <div class="input-group-append">
           <button type="button" id="btn-depart-from" class="btn btn-primary">
@@ -40,7 +46,7 @@
           </button>
         </div>
       </div>
-      <div class="input-group mb-3 col-2">
+      <div class="input-group mb-3 col-12 col-md-2">
         <input id="return-to" class="form-control" name="return-to" type="text" placeholder="Returning.." required/>
         <div class="input-group-append">
           <button type="button" id="btn-return-to" class="btn btn-primary">
@@ -48,15 +54,16 @@
           </button>
         </div>
       </div>
-      <div class="input-group mb-3 col-2">
+      <div class="input-group mb-3 col-12 col-md-2">
         <input id="travelers" class="form-control" name="travelers" type="text" placeholder="Travelers.." value="1 traveler" />
       </div>
-      <div class="input-group mb-3 col-2">
-        <a type="submit" class="btn" id="search-flight" value="Search Flight" href="resultsPage.html">Search Flight</a>
+    </div>
+      <div class="float-right">
+        <input type="submit" class="btn" id="search-flight" value="Search Flight"/>
       </div>
-    <!-- </form> -->
+    </form>
 
-    <div class="travelerClass" id="travel" data-toggle="collapse">
+    <div class="travelerClass col-12" id="travel" data-toggle="collapse">
       <table class="table table-borderless table-responsive-sm">
         <tbody>
           <tr>

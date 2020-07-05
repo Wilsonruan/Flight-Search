@@ -20,8 +20,16 @@
   </nav>
   <h1 class="display1 justify-content-center">Where to next ?</h1>
   <div class="container jumbotron">
+    <div class="form-check form-check-inline mb-3">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="roundtrip" value="option1" checked>
+      <label class="form-check-label" for="inlineRadio1">Roundtrip</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="one-way" value="option2">
+      <label class="form-check-label" for="inlineRadio2">One Way</label>
+    </div>
     <form action="resultsPage.html" method="GET" autocomplete="off">
-      <div class="row">
+      <div class="form-row">
       <div class="input-group mb-3 col-12 col-md-3">
         <input id="from-location" class="form-control" name="from-location" type="text" placeholder="Flying from.." required/>
         <div class="input-group-append">
@@ -117,6 +125,7 @@
   <script src="datepicker.js"></script>
   <script src="travelers.js"></script>
   <script src="currency.js"></script>
+  <script src="roundoroneway.js"></script>
 </body>
 
 </html>

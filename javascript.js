@@ -36,7 +36,7 @@ var fromAirport = $( "#from-location" ),
   airportInfoAPI(toAirport, $('#to-location-code'));
   airportInfoAPI(fromAirport, $('#from-location-code'));
 
-    $('#button-swap').click(() => {
+    $('#button-swap, #button-swap2').click(() => {
     const toLocation = toAirport.val();
     const fromLocation = fromAirport.val();
     const toLocationCode = $('#to-location-code').text();

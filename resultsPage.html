@@ -37,32 +37,28 @@
           <div class="col-md-3 loc-wrapper" id="from-location">
             Flying From
             <div class="card">
-              <div class="card-body loc-input">
-                YYZ
+              <div id="destination-code" class="card-body loc-input">
               </div>
             </div>
           </div>
           <div class="col-md-3 loc-wrapper" id="to-location">
             Flying To
             <div class="card">
-              <div class="card-body loc-input">
-                ICN
+              <div id="origin-code" class="card-body loc-input">
               </div>
             </div>
           </div>
           <div class="col-md-2 date-wrapper" id="depart-from">
             Departure Date
             <div class="card">
-              <div class="card-body date-input">
-                July 2nd
+              <div id="depart-date" class="card-body date-input">
               </div>
             </div>
           </div>
           <div class="col-md-2 date-wrapper" id="return-to">
             Arrival Date
             <div class="card">
-              <div class="card-body date-input">
-                July 5th
+              <div id="arrival-date" class="card-body date-input">
               </div>
             </div>
           </div>
@@ -81,13 +77,15 @@
     <!-- Flight Display Container -->
     <div class="container flights-display">
       <div class="card m-5">
-        <div class="card-body">
-            <img class="image-float-left" id="airline-logo" src="https://placehold.it/200x200" alt="Alaska Airline Logo">
-            <p id="airlines-name"></p>
-            <p id="origin-code"></p>
-            <p id="origin-name"></p>
-            <p id="destination-code"></p>
-            <p id="destination-name"></p> 
+        <div class="card-body row">
+            <img class="image-float-left col-3" id="airline-logo" src="https://placehold.it/200x200" alt="Alaska Airline Logo">
+            <div class="col-3">
+              <p class="font-weight-bold">List of Airlines:</p>
+              <div id="airlines-name" ></div>
+            </div>
+            <div id="best-price" class="col-3">
+              
+            </div>
         </div>
       </div>
     </div>

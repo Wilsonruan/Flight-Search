@@ -22,7 +22,7 @@ function flightFinder() {
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currercyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
   console.log(queryURL)
   $.ajax({
     url: queryURL,
@@ -39,7 +39,7 @@ function flightFinder() {
       $('#airlines-name').append('<p>' + airlines + '</p>') 
     }
     $('#best-price').append()
-    console.log(response.Quotes[0].MinPrice)  //est price
+    console.log(response.Quotes[0].MinPrice)  //best price
     console.log(response.Quotes[0].OutboundLeg.CarrierIds[0]) //Best Airline
 
     $('#origin-code').html(response.Places[0].IataCode);

@@ -1,7 +1,7 @@
 // Date picker calendar
 function setMinDateForReturn() {
   const departDate = $('#depart-from').val();
-  const pdd = new Date(Date.parse(departDate));
+  const pdd = new Date(Date.parse(`${departDate} 23:59:59`));
   $('#return-to').datepicker('option', 'minDate', pdd);
 }
 

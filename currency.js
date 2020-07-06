@@ -1,4 +1,3 @@
-
 $(document).ready(() => {
     var options = {
       enableHighAccuracy: true,
@@ -15,6 +14,7 @@ $(document).ready(() => {
         url: yourLocation,
         method: "GET"
       }).then(function (response) {
+          $('#country-name').val(response['sys']['country'])
           console.log(response['sys']['country'])
           var countryName = response['sys']['country'];
           var settings = {
@@ -29,12 +29,15 @@ $(document).ready(() => {
         }
         
         $.ajax(settings).done(function (response) {
+          $('#currency-name').val(response.currency.code);
             console.log(response.currency.code);
         });
       })
   
     }
     function error() {
+      $('#currency-name').val('USD');
+      $('#country-name').val('US')
         console.log("CA");
         console.log("CAD")
     }

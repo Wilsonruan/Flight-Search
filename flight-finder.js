@@ -13,13 +13,15 @@ function getUrlVars() {
 // Clicking on search button, call this function
 function flightFinder() {
   const queryString = getUrlVars();
-  const originPlace = 'SFO-sky' || queryString['from-location'];
-  const destinationPlace = 'JFK-sky' || queryString['to-location'];
+  const originPlace = queryString['from-location-code'];
+  const destinationPlace = queryString['to-location-code'];
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
+  const countryName = queryString['country-name'];
+  const currercyName = queryString['currency-name'];
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
-
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currercyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
+  console.log(queryURL)
   $.ajax({
     url: queryURL,
     method: 'GET',

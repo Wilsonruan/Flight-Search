@@ -13,7 +13,7 @@ function airportInfoAPI(airportInfo, codeName) {
     };
     $.ajax(settings).done((response) => {
       airportInfo.val(response.name);
-      codeName.text(airportLocation);
+      codeName.val(airportLocation);
     });
   });
 }
@@ -39,11 +39,11 @@ var fromAirport = $( "#from-location" ),
     $('#button-swap, #button-swap2').click(() => {
     const toLocation = toAirport.val();
     const fromLocation = fromAirport.val();
-    const toLocationCode = $('#to-location-code').text();
-    const fromLocationCode = $('#from-location-code').text();
+    const toLocationCode = $('#to-location-code').val();
+    const fromLocationCode = $('#from-location-code').val();
     toAirport.val(fromLocation);
     fromAirport.val(toLocation);
-    $('#to-location-code').text(fromLocationCode)
-    $('#from-location-code').text(toLocationCode)
+    $('#to-location-code').val(fromLocationCode)
+    $('#from-location-code').val(toLocationCode)
   });
 });

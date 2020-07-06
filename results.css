@@ -1,11 +1,11 @@
-body {
+/* body {
     background-color: #EBECF0;
-}
+}  */
 
-/* .selection-display {
-    background-color: #EBECF0;
-    border: none !important;
-} */
+.image-float-left {
+    float: left;
+    margin-right: 20px;
+}
 
 .loc-wrapper, .date-wrapper, .psg-wrapper {
     display: block;

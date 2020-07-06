@@ -27,7 +27,12 @@
   <body>
     <!-- Top Logo Bar -->
     <nav class="nav navbar navbar-expand-lg navbar-dark mb-5">
-      <span class="navbar-brand mb-0 h1">flYjet <i class="fa fa-plane"></i></span>
+      <form>
+        <span class="navbar-brand mb-0 h1 pointer" onclick="history.back()"
+          >flYjet <i class="fa fa-plane"></i
+        ></span>
+      </form>
+      <!-- <span class="navbar-brand mb-0 h1">flYjet <i class="fa fa-plane"></i></span> -->
     </nav>
 
     <!-- Selection Display Container -->
@@ -37,29 +42,25 @@
           <div class="col-md-3 loc-wrapper" id="from-location">
             Flying From
             <div class="card">
-              <div id="destination-code" class="card-body loc-input">
-              </div>
+              <div id="destination-code" class="card-body loc-input"></div>
             </div>
           </div>
           <div class="col-md-3 loc-wrapper" id="to-location">
             Flying To
             <div class="card">
-              <div id="origin-code" class="card-body loc-input">
-              </div>
+              <div id="origin-code" class="card-body loc-input"></div>
             </div>
           </div>
           <div class="col-md-2 date-wrapper" id="depart-from">
             Departure Date
             <div class="card">
-              <div id="depart-date" class="card-body date-input">
-              </div>
+              <div id="depart-date" class="card-body date-input"></div>
             </div>
           </div>
           <div class="col-md-2 date-wrapper" id="return-to">
             Arrival Date
             <div class="card">
-              <div id="arrival-date" class="card-body date-input">
-              </div>
+              <div id="arrival-date" class="card-body date-input"></div>
             </div>
           </div>
           <div class="col-md-2 psg-wrapper" id="travelers">
@@ -78,14 +79,17 @@
     <div class="container flights-display">
       <div class="card m-5">
         <div class="card-body row">
-            <img class="image-float-left col-3" id="airline-logo" src="https://placehold.it/200x200" alt="Alaska Airline Logo">
-            <div class="col-3">
-              <p class="font-weight-bold">List of Airlines:</p>
-              <div id="airlines-name" ></div>
-            </div>
-            <div id="best-price" class="col-3">
-              
-            </div>
+          <img
+            class="image-float-left col-3"
+            id="airline-logo"
+            src="https://placehold.it/200x200"
+            alt="Alaska Airline Logo"
+          />
+          <div class="col-3">
+            <p class="font-weight-bold">List of Airlines:</p>
+            <div id="airlines-name"></div>
+          </div>
+          <div id="best-price" class="col-3"></div>
         </div>
       </div>
     </div>

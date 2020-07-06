@@ -1,134 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flYjet</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="plane.ico" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>flYjet</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="plane.ico" />
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-</head>
-
-<body>
-  <nav class="nav navbar navbar-expand-lg navbar-dark mb-5">
-    <span class="navbar-brand mb-0 h1">flYjet <i class="fa fa-plane"></i></span>
-  </nav>
-  <h1 class="display1 justify-content-center">Where to next ?</h1>
-  <div class="container jumbotron">
-    <div class="form-check form-check-inline mb-3">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="roundtrip" value="option1" checked>
-      <label class="form-check-label" for="inlineRadio1">Roundtrip</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="one-way" value="option2">
-      <label class="form-check-label" for="inlineRadio2">One Way</label>
-    </div>
-    <form action="resultsPage.html" method="GET" autocomplete="off">
-      <div class="form-row">
-      <div class="input-group mb-3 col-12 col-md-3">
-        <input id="from-location" class="form-control" name="from-location" type="text" placeholder="Flying from.." required/>
-        <div class="input-group-append">
-          <button type="button" id="button-swap" class="btn btn-primary">
-            <i class="fas fa-exchange-alt"></i>
-          </button>
-        </div>
+  <body>
+    <nav class="nav navbar navbar-expand-lg navbar-dark mb-5">
+      <span class="navbar-brand mb-0 h1 pointer" onclick="history.back()"
+        >flYjet <i class="fa fa-plane"></i
+      ></span>
+    </nav>
+    <h1 class="display1 justify-content-center">Where to next ?</h1>
+    <div class="container jumbotron">
+      <div class="form-check form-check-inline mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="inlineRadioOptions"
+          id="roundtrip"
+          value="option1"
+          checked
+        />
+        <label class="form-check-label" for="inlineRadio1">Roundtrip</label>
       </div>
-      <div class="input-group mb-3 col-12 col-md-3">
-        <input id="to-location" class="form-control" name="to-location" type="text" placeholder="Flying to.." required/>
-        <div class="input-group-append">
-          <button type="button" id="button-swap2" class="btn btn-primary">
-            <i class="fas fa-exchange-alt"></i>
-          </button>
-        </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="inlineRadioOptions"
+          id="one-way"
+          value="option2"
+        />
+        <label class="form-check-label" for="inlineRadio2">One Way</label>
       </div>
-      <div class="input-group mb-3 col-12 col-md-2">
-        <input id="depart-from" class="form-control" name="depart-from" type="text" placeholder="Departing.." required/>
-        <div class="input-group-append">
-          <button type="button" id="btn-depart-from" class="btn btn-primary">
-            <i class="fas fa-calendar"></i>
-          </button>
-        </div>
-      </div>
-      <div class="input-group mb-3 col-12 col-md-2">
-        <input id="return-to" class="form-control" name="return-to" type="text" placeholder="Returning.." required/>
-        <div class="input-group-append">
-          <button type="button" id="btn-return-to" class="btn btn-primary">
-            <i class="fas fa-calendar"></i>
-          </button>
-        </div>
-      </div>
-      <div class="input-group mb-3 col-12 col-md-2">
-        <input id="travelers" class="form-control" name="travelers" type="text" placeholder="Travelers.." value="1 traveler" />
-      </div>
-    </div>
-      <div class="float-right">
-        <input type="submit" class="btn" id="search-flight" value="Search Flight"/>
-      </div>
-      <input id="to-location-code" name="to-location-code" class="hide"/>
-      <input id="from-location-code" name="from-location-code" class="hide"/>
-      <input id="country-name" name="country-name" class="hide"/>
-      <input id="currency-name" name="currency-name" class="hide"/>
-    </form>
-
-    <div class="travelerClass col-12" id="travel" data-toggle="collapse">
-      <table class="table table-borderless table-responsive-sm">
-        <tbody>
-          <tr>
-            <td><b>Adults:</b></td>
-            <td>
-              <button class="btn btn-outline-secondary" id="decrementAdult" disabled>
-                -
+      <form action="resultsPage.html" method="GET" autocomplete="off">
+        <div class="form-row">
+          <div class="input-group mb-3 col-12 col-md-3">
+            <input
+              id="from-location"
+              class="form-control"
+              name="from-location"
+              type="text"
+              placeholder="Flying from.."
+              required
+            />
+            <div class="input-group-append">
+              <button type="button" id="button-swap" class="btn btn-primary">
+                <i class="fas fa-exchange-alt"></i>
               </button>
-            </td>
-            <td id="adultCount">1</td>
-            <td>
-              <button class="btn btn-outline-secondary" id="incrementAdult">
-                +
+            </div>
+          </div>
+          <div class="input-group mb-3 col-12 col-md-3">
+            <input
+              id="to-location"
+              class="form-control"
+              name="to-location"
+              type="text"
+              placeholder="Flying to.."
+              required
+            />
+            <div class="input-group-append">
+              <button type="button" id="button-swap2" class="btn btn-primary">
+                <i class="fas fa-exchange-alt"></i>
               </button>
-            </td>
-            <td><b>16+ years</b></td>
-          </tr>
-          <tr>
-            <td><b>Children:</b></td>
-            <td>
-              <button class="btn btn-outline-secondary" id="decrementChild" disabled>
-                -
+            </div>
+          </div>
+          <div class="input-group mb-3 col-12 col-md-2">
+            <input
+              id="depart-from"
+              class="form-control"
+              name="depart-from"
+              type="text"
+              placeholder="Departing.."
+              required
+            />
+            <div class="input-group-append">
+              <button
+                type="button"
+                id="btn-depart-from"
+                class="btn btn-primary"
+              >
+                <i class="fas fa-calendar"></i>
               </button>
-            </td>
-            <td id="childCount">0</td>
-            <td>
-              <button class="btn btn-outline-secondary" id="incrementChild">
-                +
+            </div>
+          </div>
+          <div class="input-group mb-3 col-12 col-md-2">
+            <input
+              id="return-to"
+              class="form-control"
+              name="return-to"
+              type="text"
+              placeholder="Returning.."
+              required
+            />
+            <div class="input-group-append">
+              <button type="button" id="btn-return-to" class="btn btn-primary">
+                <i class="fas fa-calendar"></i>
               </button>
-            </td>
-            <td><b>0-15 years</b></td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+          <div class="input-group mb-3 col-12 col-md-2">
+            <input
+              id="travelers"
+              class="form-control"
+              name="travelers"
+              type="text"
+              placeholder="Travelers.."
+              value="1 traveler"
+            />
+          </div>
+        </div>
+        <div class="float-right">
+          <input
+            type="submit"
+            class="btn"
+            id="search-flight"
+            value="Search Flight"
+          />
+        </div>
+        <input id="to-location-code" name="to-location-code" class="hide" />
+        <input id="from-location-code" name="from-location-code" class="hide" />
+        <input id="country-name" name="country-name" class="hide" />
+        <input id="currency-name" name="currency-name" class="hide" />
+      </form>
+
+      <div class="travelerClass col-12" id="travel" data-toggle="collapse">
+        <table class="table table-borderless table-responsive-sm">
+          <tbody>
+            <tr>
+              <td><b>Adults:</b></td>
+              <td>
+                <button
+                  class="btn btn-outline-secondary"
+                  id="decrementAdult"
+                  disabled
+                >
+                  -
+                </button>
+              </td>
+              <td id="adultCount">1</td>
+              <td>
+                <button class="btn btn-outline-secondary" id="incrementAdult">
+                  +
+                </button>
+              </td>
+              <td><b>16+ years</b></td>
+            </tr>
+            <tr>
+              <td><b>Children:</b></td>
+              <td>
+                <button
+                  class="btn btn-outline-secondary"
+                  id="decrementChild"
+                  disabled
+                >
+                  -
+                </button>
+              </td>
+              <td id="childCount">0</td>
+              <td>
+                <button class="btn btn-outline-secondary" id="incrementChild">
+                  +
+                </button>
+              </td>
+              <td><b>0-15 years</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-  <script src="javascript.js"></script>
-  <script src="datepicker.js"></script>
-  <script src="travelers.js"></script>
-  <script src="currency.js"></script>
-  <script src="roundoroneway.js"></script>
-</body>
-
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+    <!-- js file for the entire application -->
+    <script src="script.js"></script>
+    <script src="javascript.js"></script>
+    <script src="datepicker.js"></script>
+    <script src="travelers.js"></script>
+    <script src="currency.js"></script>
+    <script src="roundoroneway.js"></script>
+  </body>
 </html>

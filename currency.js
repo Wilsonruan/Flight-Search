@@ -10,6 +10,7 @@ $(document).ready(() => {
       var longAtt = crd.longitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')
       var latAtt = crd.latitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')
       var yourLocation = "https://api.openweathermap.org/data/2.5/weather?lat=" + latAtt + "&lon=" + longAtt + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+      console.log(yourLocation)
       $.ajax({
         url: yourLocation,
         method: "GET"
@@ -38,8 +39,6 @@ $(document).ready(() => {
     function error() {
       $('#currency-name').val('USD');
       $('#country-name').val('US')
-        console.log("CA");
-        console.log("CAD")
     }
   
     navigator.geolocation.getCurrentPosition(success, error, options);

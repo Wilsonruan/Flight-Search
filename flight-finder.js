@@ -19,6 +19,8 @@ function flightFinder() {
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const currercyName = queryString['currency-name'];
+  $('#depart-date').html(outboundDate);
+  $('#arrival-date').html(inboundDate);
 
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currercyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
   console.log(queryURL)
@@ -32,7 +34,14 @@ function flightFinder() {
     },
   }).then((response) => {
     console.log(response);
-    $('#airlines-name').html(response.Carriers[0].Name);
+    for (var i = 0; i < response.Carriers.length; i++) {
+      var airlines = response['Carriers'][i]['Name'];
+      $('#airlines-name').append('<p>' + airlines + '</p>') 
+    }
+    $('#best-price').append()
+    console.log(response.Quotes[0].MinPrice)  //est price
+    console.log(response.Quotes[0].OutboundLeg.CarrierIds[0]) //Best Airline
+
     $('#origin-code').html(response.Places[0].IataCode);
     $('#origin-name').html(response.Places[0].Name);
     $('#destination-code').html(response.Places[1].IataCode);

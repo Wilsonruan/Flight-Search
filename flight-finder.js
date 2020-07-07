@@ -24,7 +24,7 @@ function flightFinder() {
   $('#origin-code').html(originPlace);
   $('#destination-code').html(destinationPlace);
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currercyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
   console.log(queryURL)
   $.ajax({
     url: queryURL,

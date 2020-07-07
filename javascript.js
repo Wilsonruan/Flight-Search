@@ -12,6 +12,7 @@ function airportInfoAPI(airportInfo, codeName) {
       },
     };
     $.ajax(settings).done((response) => {
+      console.log(response)
       airportInfo.val(response.name);
       codeName.val(airportLocation);
     });

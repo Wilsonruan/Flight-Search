@@ -21,7 +21,7 @@ $(document).ready(() => {
           var settings = {
             "async": true,
             "crossDomain": true,
-            "url": "https://countries-cities.p.rapidapi.com/location/country/" + countryName + "?format=json",
+            "url": "https://countries-cities.p.rapidapi.com/location/country/" + countryName,
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "countries-cities.p.rapidapi.com",

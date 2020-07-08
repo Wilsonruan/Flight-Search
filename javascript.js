@@ -12,7 +12,7 @@ function airportInfoAPI(airportInfo, codeName) {
       },
     };
     $.ajax(settings).done((response) => {
-      console.log(response)
+      console.log(response);
       airportInfo.val(response.name);
       codeName.val(airportLocation);
     });
@@ -20,24 +20,24 @@ function airportInfoAPI(airportInfo, codeName) {
 }
 
 function lookupAirports() {
-  return $.getJSON( "https://rawgit.com/tjvantoll/jquery-ui-in-action-demos/master/chapter-11/json/airports.json" );
+  return $.getJSON("https://rawgit.com/tjvantoll/jquery-ui-in-action-demos/master/chapter-11/json/airports.json");
 };
 
 $(document).ready(() => {
-var fromAirport = $( "#from-location" ),
-    toAirport = $( "#to-location" )
+  var fromAirport = $("#from-location"),
+    toAirport = $("#to-location")
 
-    lookupAirports().then(function( data ) {
-      fromAirport.add( toAirport )
-          .autocomplete({
-              source: data.airports,
-              minLength: 2
-          });
+  lookupAirports().then(function (data) {
+    fromAirport.add(toAirport)
+      .autocomplete({
+        source: data.airports,
+        minLength: 2
+      });
   });
   airportInfoAPI(toAirport, $('#to-location-code'));
   airportInfoAPI(fromAirport, $('#from-location-code'));
 
-    $('#button-swap, #button-swap2').click(() => {
+  $('#button-swap, #button-swap2').click(() => {
     const toLocation = toAirport.val();
     const fromLocation = fromAirport.val();
     const toLocationCode = $('#to-location-code').val();

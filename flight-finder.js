@@ -18,11 +18,12 @@ function flightFinder() {
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
-  const currercyName = queryString['currency-name'];
+  const currercyName = queryString['currency-name'] || 'USD';
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
   $('#origin-code').html(originPlace);
   $('#destination-code').html(destinationPlace);
+  $('#currencyList').val(currercyName);
 
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currercyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}?inboundpartialdate=${inboundDate}`;
   console.log(queryURL)

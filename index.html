@@ -24,11 +24,21 @@
   </head>
 
   <body>
-    <nav class="nav navbar navbar-expand-lg navbar-dark mb-5">
-      <span class="navbar-brand mb-0 h1 pointer" onclick="history.back()"
-        >flYjet <i class="fa fa-plane"></i
-      ></span>
-    </nav>
+    <div class="nav navbar">
+      <nav class="navbar-expand-lg navbar-dark mb-5">
+        <form>
+          <span class="navbar-brand mb-0 h1 pointer" onclick="history.back()"
+            >flYjet <i class="fa fa-plane"></i
+          ></span>
+        </form>
+        <!-- <span class="navbar-brand mb-0 h1">flYjet <i class="fa fa-plane"></i></span> -->
+      </nav>
+      <div class="float-right">
+        <label for="">Currency: </label>
+        <input id="currencyList" name="currencyList"/>
+      </div>
+      
+    </div>
     <h1 class="display1 justify-content-center">Where to next ?</h1>
     <div class="container jumbotron">
       <div class="form-check form-check-inline mb-3">
@@ -209,5 +219,6 @@
     <script src="travelers.js"></script>
     <script src="currency.js"></script>
     <script src="roundoroneway.js"></script>
+    <script src="currencyChange.js"></script>
   </body>
 </html>

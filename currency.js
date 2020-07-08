@@ -32,12 +32,14 @@ $(document).ready(() => {
         $.ajax(settings).done(function (response) {
           $('#currency-name').val(response.currency.code);
             console.log(response.currency.code);
+            $('#currencyList').val(response.currency.code);
         });
       })
   
     }
     function error() {
       $('#currency-name').val('USD');
+      $('#currencyList').val('USD');
       $('#country-name').val('US')
     }
   

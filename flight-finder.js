@@ -84,8 +84,16 @@ function resultsFlight (response, resultTitle) {
 
     // adding flight price
     const bestPrice = response.Quotes[i].MinPrice;
+    var directFlight = response.Quotes[i].Direct;
     const currencySymbol = response.Currencies[0].Symbol;
-    cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} </p>`);
+    const currencyCode = response.Currencies[0].Code;
+    if (directFlight) {
+      directFlight = "Yes";
+    } else {
+      directFlight = "No";
+    }
+    cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
+    cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
   }
 }
 

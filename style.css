@@ -16,7 +16,7 @@ body {
 .display1 {
   display: flex;
   text-align: center;
-  font-family: cursive;
+  font-family: Stencil Std, fantasy;
 }
 
 .fa-plane {

@@ -34,35 +34,35 @@ function flightFinderOneWay(queryString) {
     },
   }).then((response) => {
     console.log(response);
-    for (let i = 0; i < response.Quotes.length; i++) {
+    for (let i = 0; i < response.Quotes.length; i += 1) {
       // adding airlines name
       const card = $('<div>');
       card.addClass('card m-5');
       card.appendTo('.flights-display');
       const airlineCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
       const cardBody = $('<div>');
-      cardBody.append(`<p>Carrier Id : ${airlineCode}</p>`);
       cardBody.appendTo(card);
-      // adding carrier name & carrier code
-      for (let i = 0; i < response.Carriers.length; i++) {
-        if (airlineCode === response.Carriers[i].CarrierId) {
-          const airlineName = response.Carriers[i].Name;
-          cardBody.append(`<p>Carrier Name : ${airlineName}</p>`);
-        }
-      }
       // adding flight price
       const bestPrice = response.Quotes[i].MinPrice;
       const currencySymbol = response.Currencies[0].Symbol;
       cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} </p>`);
-
+      // adding carrier name & carrier code
+      for (let i = 0; i < response.Carriers.length; i++) {
+        if (airlineCode === response.Carriers[i].CarrierId) {
+          const airlineName = response.Carriers[i].Name;
+          cardBody.append(`<p> ${airlineName}</p>`);
+          // cardBody.append(`<p>Airline ID: ${airlineCode}</p>`);
+        }
+      }
       // adding source and destination names
       const source = response.Places[1].Name;
       const sourceCode = response.Places[1].IataCode;
-      cardBody.append(`<p>Source: ${source} - ${sourceCode} </p>`);
-
       const destination = response.Places[0].Name;
       const destinationCode = response.Places[0].IataCode;
-      cardBody.append(`<p>Destination: ${destination} - ${destinationCode} </p>`);
+      cardBody.append(`<p>${sourceCode} &#x27F6; ${destinationCode} </p>`);
+      // cardBody.append(`<p> ${source}  &#x27F6; ${destination} </p>`);
+
+
     }
   });
 }
@@ -98,65 +98,62 @@ function flightFinderRoundTrip(queryString) {
       card.appendTo('.flights-display');
       const cardBody = $('<div>');
       cardBody.appendTo(card);
+
       // adding flight price
       const bestPrice = response.Quotes[i].MinPrice;
       const currencySymbol = response.Currencies[0].Symbol;
       cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} </p>`);
 
       // Outbound details
-      const outboundCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
       // adding carrier name & carrier code for outbound
+      const outboundCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
       for (let i = 0; i < response.Carriers.length; i++) {
         if (outboundCode === response.Carriers[i].CarrierId) {
           const airlineName = response.Carriers[i].Name;
-          cardBody.append(`<p>Carrier Name : ${airlineName} (Code: ${outboundCode})</p>`);
+          cardBody.append(`<p>${airlineName}</p>`);
+          // cardBody.append(`<p>Airline Code: ${outboundCode}</p>`);
         }
       }
+      // Source and destination details for Outbound
       const originId = response.Quotes[i].OutboundLeg.OriginId;
       const destinationId = response.Quotes[i].OutboundLeg.DestinationId;
       const departureDateold = response.Quotes[i].OutboundLeg.DepartureDate;
       const departureDate = moment(departureDateold).format('L');
-
       const originName = response.Places[1].Name;
       const originCode = response.Places[1].IataCode;
-      cardBody.append(`<p>Origin: ${originName} - ${originCode} ( ID: ${originId})</p>`);
-
+      // cardBody.append(`<p>$ ${originName}</p>`);
+      // cardBody.append(`<p>$ ${originId}</p>`);
       const destinationName = response.Places[0].Name;
       const destinationCode = response.Places[0].IataCode;
-      cardBody.append(`<p>Destination: ${destinationName} - ${destinationCode} ( ID: ${destinationId})</p>`);
-
+      cardBody.append(`<p>${originCode} &#x27F6; ${destinationCode}</p>`);
+      // cardBody.append(`<p>Destination: ${destinationName} - ${destinationCode} ( ID: ${destinationId})</p>`);
       cardBody.append(`<p>Departure Date: ${departureDate}</p>`);
 
       // inbound details
-      const inboundCode = response.Quotes[i].InboundLeg.CarrierIds[0];
+      // Source and destination details for inbound
       const originIdReturn = response.Quotes[i].InboundLeg.OriginId;
-
       const destinationIdReturn = response.Quotes[i].InboundLeg.DestinationId;
       const departureDateoldReturn = response.Quotes[i].InboundLeg.DepartureDate;
       const departureDateReturn = moment(departureDateoldReturn).format('L');
-
       cardBody.append('<hr>');
       // adding carrier name & carrier code for inbound
+      const inboundCode = response.Quotes[i].InboundLeg.CarrierIds[0];
       for (let i = 0; i < response.Carriers.length; i++) {
         if (inboundCode === response.Carriers[i].CarrierId) {
           const airlineName = response.Carriers[i].Name;
-          cardBody.append(`<p>Carrier Name : ${airlineName} (Code: ${inboundCode})</p>`);
+          cardBody.append(`<p> ${airlineName}</p>`);
+          // cardBody.append(`<p> Airline Code: ${inboundCode}</p>`);
         }
       }
-
       const originNameReturn = response.Places[0].Name;
       const originCodeReturn = response.Places[0].IataCode;
-      cardBody.append(`<p>Origin: ${originNameReturn} - ${originCodeReturn} ( ID: ${originIdReturn})</p>`);
-
+      // cardBody.append(`<p>Origin: ${originNameReturn} - ${originCodeReturn} ( ID: ${originIdReturn})</p>`);
       const destinationNameReturn = response.Places[1].Name;
       const destinationCodeReturn = response.Places[1].IataCode;
-      cardBody.append(`<p>Destination: ${destinationNameReturn} - ${destinationCodeReturn} ( ID: ${destinationIdReturn})</p>`);
-      // cardBody.append(`<p>Origin Id: ${originIdReturn}</p>`);
-      // cardBody.append(`<p>Destination Id: ${destinationIdReturn}</p>`);
+      cardBody.append(`<p>${originCodeReturn} &#x27F6; ${destinationCodeReturn}</p>`);
+      // cardBody.append(`<p>Destination: ${destinationNameReturn} - ${destinationCodeReturn} ( ID: ${destinationIdReturn})</p>`);
       cardBody.append(`<p>Arrival Date: ${departureDateReturn}</p>`);
     }
-
-
   });
 }
 

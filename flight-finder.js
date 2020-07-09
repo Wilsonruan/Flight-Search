@@ -15,11 +15,10 @@ function flightFinderOneWay(queryString) {
   const originPlace = queryString['from-location-code'];
   const destinationPlace = queryString['to-location-code'];
   const outboundDate = queryString['depart-from'];
-  const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const currencyName = queryString['currency-name'];
   $('#depart-date').html(outboundDate);
-  $('#arrival-date').html(inboundDate);
+  $('#arrival-date').html('(One-Way)');
   $('#origin-code').html(originPlace);
   $('#destination-code').html(destinationPlace);
 
@@ -35,21 +34,53 @@ function flightFinderOneWay(queryString) {
     },
   }).then((response) => {
     console.log(response);
+    for (let i = 0; i < response.Quotes.length; i++) {
+      // adding airlines name
+      const card = $('<div>');
+      card.addClass('card m-5');
+      card.appendTo('.flights-display');
+      const airlineCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
+      const cardBody = $('<div>');
+      cardBody.append(`<p>Carrier Id : ${airlineCode}</p>`);
+      cardBody.appendTo(card);
+      // adding carrier name & carrier code
+      for (let i = 0; i < response.Carriers.length; i++) {
+        if (airlineCode === response.Carriers[i].CarrierId) {
+          const airlineName = response.Carriers[i].Name;
+          cardBody.append(`<p>Carrier Name : ${airlineName}</p>`);
+        }
+      }
+      // adding flight price
+      const bestPrice = response.Quotes[i].MinPrice;
+      const currencySymbol = response.Currencies[0].Symbol;
+      cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} </p>`);
 
-    const resultTitle = `Outbound Date: ${outboundDate}`;
-    resultsFlight (response, resultTitle);
+      // adding source and destination names
+      const source = response.Places[1].Name;
+      const sourceCode = response.Places[1].IataCode;
+      cardBody.append(`<p>Source: ${source} - ${sourceCode} </p>`);
+
+      const destination = response.Places[0].Name;
+      const destinationCode = response.Places[0].IataCode;
+      cardBody.append(`<p>Destination: ${destination} - ${destinationCode} </p>`);
+    }
   });
 }
 
+// Round-trip function
 function flightFinderRoundTrip(queryString) {
-  const originPlace = queryString['to-location-code'];
-  const destinationPlace = queryString['from-location-code'];
-  const outboundDate = queryString['return-to'];
+  const originPlace = queryString['from-location-code'];
+  const destinationPlace = queryString['to-location-code'];
+  const outboundDate = queryString['depart-from'];
+  const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const currencyName = queryString['currency-name'];
-
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
-  console.log(queryURL)
+  $('#depart-date').html(outboundDate);
+  $('#arrival-date').html(inboundDate);
+  $('#origin-code').html(originPlace);
+  $('#destination-code').html(destinationPlace);
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}/${inboundDate}`;
+  console.log(queryURL);
   $.ajax({
     url: queryURL,
     method: 'GET',
@@ -60,49 +91,79 @@ function flightFinderRoundTrip(queryString) {
     },
   }).then((response) => {
     console.log(response);
-    const resultTitle = `Return Date: ${outboundDate}`;
-    resultsFlight (response, resultTitle);
+
+    for (let i = 0; i < response.Quotes.length; i += 1) {
+      const card = $('<div>');
+      card.addClass('card m-5');
+      card.appendTo('.flights-display');
+      const cardBody = $('<div>');
+      cardBody.appendTo(card);
+      // adding flight price
+      const bestPrice = response.Quotes[i].MinPrice;
+      const currencySymbol = response.Currencies[0].Symbol;
+      cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} </p>`);
+
+      // Outbound details
+      const outboundCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
+      // adding carrier name & carrier code for outbound
+      for (let i = 0; i < response.Carriers.length; i++) {
+        if (outboundCode === response.Carriers[i].CarrierId) {
+          const airlineName = response.Carriers[i].Name;
+          cardBody.append(`<p>Carrier Name : ${airlineName} (Code: ${outboundCode})</p>`);
+        }
+      }
+      const originId = response.Quotes[i].OutboundLeg.OriginId;
+      const destinationId = response.Quotes[i].OutboundLeg.DestinationId;
+      const departureDateold = response.Quotes[i].OutboundLeg.DepartureDate;
+      const departureDate = moment(departureDateold).format('L');
+
+      const originName = response.Places[1].Name;
+      const originCode = response.Places[1].IataCode;
+      cardBody.append(`<p>Origin: ${originName} - ${originCode} ( ID: ${originId})</p>`);
+
+      const destinationName = response.Places[0].Name;
+      const destinationCode = response.Places[0].IataCode;
+      cardBody.append(`<p>Destination: ${destinationName} - ${destinationCode} ( ID: ${destinationId})</p>`);
+
+      cardBody.append(`<p>Departure Date: ${departureDate}</p>`);
+
+      // inbound details
+      const inboundCode = response.Quotes[i].InboundLeg.CarrierIds[0];
+      const originIdReturn = response.Quotes[i].InboundLeg.OriginId;
+
+      const destinationIdReturn = response.Quotes[i].InboundLeg.DestinationId;
+      const departureDateoldReturn = response.Quotes[i].InboundLeg.DepartureDate;
+      const departureDateReturn = moment(departureDateoldReturn).format('L');
+
+      cardBody.append('<hr>');
+      // adding carrier name & carrier code for inbound
+      for (let i = 0; i < response.Carriers.length; i++) {
+        if (inboundCode === response.Carriers[i].CarrierId) {
+          const airlineName = response.Carriers[i].Name;
+          cardBody.append(`<p>Carrier Name : ${airlineName} (Code: ${inboundCode})</p>`);
+        }
+      }
+
+      const originNameReturn = response.Places[0].Name;
+      const originCodeReturn = response.Places[0].IataCode;
+      cardBody.append(`<p>Origin: ${originNameReturn} - ${originCodeReturn} ( ID: ${originIdReturn})</p>`);
+
+      const destinationNameReturn = response.Places[1].Name;
+      const destinationCodeReturn = response.Places[1].IataCode;
+      cardBody.append(`<p>Destination: ${destinationNameReturn} - ${destinationCodeReturn} ( ID: ${destinationIdReturn})</p>`);
+      // cardBody.append(`<p>Origin Id: ${originIdReturn}</p>`);
+      // cardBody.append(`<p>Destination Id: ${destinationIdReturn}</p>`);
+      cardBody.append(`<p>Arrival Date: ${departureDateReturn}</p>`);
+    }
+
+
   });
 }
 
-function resultsFlight (response, resultTitle) {
-  for (let i = 0; i < response.Quotes.length; i++) {
-    // adding airlines name
-    const card = $('<div>');
-    card.addClass('card m-5');
-    card.appendTo('.flights-display');
-    const airlineCode = response.Quotes[i].OutboundLeg.CarrierIds[0];
-    const cardBody = $('<div>');
-    cardBody.append(`<p>${resultTitle}</p>`);
-    cardBody.append(`<p>Carrier Id : ${airlineCode}</p>`);
-    cardBody.appendTo(card);
-    for (let i = 0; i < response.Carriers.length; i++) {
-      if (airlineCode === response.Carriers[i].CarrierId) {
-        const airlineName = response.Carriers[i].Name;
-        cardBody.append(`<p>Carrier Name : ${airlineName}</p>`);
-      }
-    }
-
-    // adding flight price
-    const bestPrice = response.Quotes[i].MinPrice;
-    var directFlight = response.Quotes[i].Direct;
-    const currencySymbol = response.Currencies[0].Symbol;
-    const currencyCode = response.Currencies[0].Code;
-    if (directFlight) {
-      directFlight = "Yes";
-    } else {
-      directFlight = "No";
-    }
-    cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
-    cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
-  }
-}
-    
 $(document).ready(() => {
   const queryString = getUrlVars();
   const inboundDate = queryString['return-to'];
   if (inboundDate) {
-    flightFinderOneWay(queryString);
     flightFinderRoundTrip(queryString);
   } else {
     flightFinderOneWay(queryString);

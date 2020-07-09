@@ -9,6 +9,18 @@ body {
   background-color: #1d258c;
 }
 
+.selection-display {
+  background-color: #1d258c;
+}
+
+.card-body {
+  color: black;
+}
+
+.label {
+  color: white;
+}
+
 .navbar {
   background-color: #1d258c;
 }

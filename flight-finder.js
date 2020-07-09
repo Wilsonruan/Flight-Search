@@ -10,7 +10,7 @@ function getUrlVars() {
   return queryString;
 }
 
-// Clicking on search button, call this function
+// One-way function
 function flightFinderOneWay(queryString) {
   const originPlace = queryString['from-location-code'];
   const destinationPlace = queryString['to-location-code'];
@@ -35,6 +35,7 @@ function flightFinderOneWay(queryString) {
     },
   }).then((response) => {
     console.log(response);
+
     const resultTitle = `Outbound Date: ${outboundDate}`;
     resultsFlight (response, resultTitle);
   });
@@ -96,7 +97,7 @@ function resultsFlight (response, resultTitle) {
     cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
   }
 }
-
+    
 $(document).ready(() => {
   const queryString = getUrlVars();
   const inboundDate = queryString['return-to'];

@@ -6,6 +6,7 @@ $(document).ready(() => {
     };
   
     function success(pos) {
+      $('#currency-name').val('CAD');
       var crd = pos.coords;
       var longAtt = crd.longitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')
       var latAtt = crd.latitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')

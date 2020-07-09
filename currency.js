@@ -6,6 +6,7 @@ $(document).ready(() => {
   };
 
   function success(pos) {
+    $('#currency-name').val('CAD'); //In Case, our countries-cities API fail. 
     const crd = pos.coords;
     const longAtt = crd.longitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1');
     const latAtt = crd.latitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1');

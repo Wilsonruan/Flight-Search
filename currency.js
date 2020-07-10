@@ -7,7 +7,7 @@ $(document).ready(() => {
 
   function success(pos) {
     $('#currency-name').val('CAD'); //In case, our countries-cities API fail. 
-    $('#currencyList').append('<option value="CAN">CAN-Canadian Dollar</option>')
+    $('#currencyList').append('<option value="CAD">CAD-Canadian Dollar</option>')
     currencyListApp ()
     const crd = pos.coords;
     const longAtt = crd.longitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1');

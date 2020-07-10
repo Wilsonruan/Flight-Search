@@ -52,6 +52,9 @@ function flightFinderOneWay(queryString) {
     },
   }).then((response) => {
     console.log(response);
+    if (response.Quotes.length == 0) {
+      showNoResultFound ()
+    }
     for (let i = 0; i < response.Quotes.length; i += 1) {
       // adding airlines name
       const card = $('<div>');
@@ -104,11 +107,13 @@ function flightFinderRoundTrip(queryString) {
   const countryName = queryString['country-name'];
   // const currencyName = queryString['currency-name'];
   const countryCode = queryString['currencyList']
+  const travlers = queryString['travelers']
   console.log(countryCode)
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
   $('#origin-code').html(originPlace);
   $('#destination-code').html(destinationPlace);
+  $('#travelers-results').html(travlers);
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}/${inboundDate}`;
   $.ajax({
     url: queryURL,
@@ -276,12 +281,15 @@ function flightFinderRoundTripW(queryString) {
     },
   }).then((response) => {
     console.log(response);
+    if (response.Quotes.length == 0) {
+      showNoResultFound ()
+    }
     const resultTitle = `Return Date: ${outboundDate}`;
-    resultsFlight (response, resultTitle);
+    resultsFlight (response, resultTitle, originPlace, destinationPlace);
   });
 }
 
-function resultsFlight (response, resultTitle) {
+function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
   for (let i = 0; i < response.Quotes.length; i++) {
     // adding airlines name
     const card = $('<div>');
@@ -312,6 +320,14 @@ function resultsFlight (response, resultTitle) {
     cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
     cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
   }
+  calcDistance(originPlace, destinationPlace, cardBody);
+}
+
+function showNoResultFound () {
+  const card = $('<div>');
+  card.addClass('card m-5');
+  card.appendTo('.flights-display');
+  card.append(`<p>No results were Found.</p>`);
 }
 
 $(document).ready(() => {

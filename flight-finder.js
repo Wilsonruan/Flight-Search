@@ -19,6 +19,8 @@ function flightFinder() {
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const currercyName = queryString['currency-name'] || 'USD';
+  const countryCode = queryString['currencyList']
+  console.log(countryCode)
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
   $('#origin-code').html(originPlace);

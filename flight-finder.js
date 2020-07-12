@@ -208,7 +208,7 @@ function flightFinderRoundTrip(queryString) {
       cardBody.append(`<p>Return Date: ${returnDate}</p>`);
       cardBody.append(`<p>Carrier Name: ${inboundCarrierName}</p>`);
       cardBody.append(`<p>Carrier Id: ${inboundCarrierId}</p>`);
-      cardBody.append(`<p> ${destinationPlace} (${destinationPlaceCode})  &#x27F6; ${originPlace} (${originPlaceCode})</p>`);
+      cardBody.append(`<p> ${originPlace} (${originPlaceCode})  &#x27F6; ${destinationPlace} (${destinationPlaceCode})</p>`);
       cardBody.append(`<p>Direct Flight: ${directFlight} </p>`);
       calcDistance(originPlaceCode, destinationPlaceCode, cardBody);
     }
@@ -294,6 +294,7 @@ function resultsFlight(response, resultTitle, resultTypeId) {
     cardBody.append(`<p>Carrier Id : ${carrierId}</p>`);
     cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
     cardBody.append(`<p>${source} (${sourceCode}) &#x27F6; ${destination} (${destinationCode})</p>`);
+    cardBody.append(`<p> ${destination} (${destinationCode})  &#x27F6; ${source} (${sourceCode})</p>`);
     calcDistance(sourceCode, destinationCode, cardBody);
   }
 }

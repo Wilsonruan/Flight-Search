@@ -1,6 +1,4 @@
 ## Flight Search - [flYjet](https://wilsonruan.github.io/Flight-Search/)
-
-[https://wilsonruan.github.io/Flight-Search/]
 Our project, flYjet, shows all flight options in one place, creating a simple alternative to the confusing sites. It is a simple, easy to use application where a user can search for flights according to their starting point/destination and whether the user is travelling one-way or both ways. flYjet will find the best possible match and provide the user with an option to choose from. Flight prices, distances between source/destination, and travel durations are provided to the user. 
 
 ## Motivation

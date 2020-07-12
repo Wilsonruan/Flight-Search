@@ -11,7 +11,7 @@ As a group with passion to travel all around the world and a lot of experiences 
 ![Main Page Screenshot](assets/website_mainpage.png?raw=true "Title")
 
 ## Results Page Screenshot
-![Results Page Screenshot](assets/Screenshot-result.png?raw=true "Title")
+![Results Page Screenshot](assets/results_page.png?raw=true "Title")
 
 ## Features
 - Easy to use, Friendly & Free

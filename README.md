@@ -5,9 +5,11 @@ Our application - flYjet, shows all the flight options in one place, creating a 
 As a group with passion to travel all around the world and a lot of experiences travelling many countries, we understood the difficulty in choosing the best flight. Also, not knowing which currency the website uses, we were charged extra when the flight ticket was purchased in USD. Our project, flYjet, was designed to resolve all these issues and provide travellers with the best experience.
 
 ## Screenshots
-![flYjet Logo](Logo-no-bg.png?raw=true "Title")
+![flYjet Logo](logo_image.png?raw=true "Title")
+
 Main Page Screenshot
-![Main Page Screenshot](assets/Screenshot-main.png?raw=true "Title")
+![Main Page Screenshot](assets/website_mainpage.png?raw=true "Title")
+
 Results Page Screenshot
 ![Results Page Screenshot](assets/Screenshot-result.png?raw=true "Title")
 
@@ -37,4 +39,4 @@ Github URL: https://github.com/Wilsonruan/Flight-Search/
 Website URL: https://wilsonruan.github.io/Flight-Search/
 
 ## License
-© [flYjet] Ltd 2020(https://wilsonruan.github.io/Flight-Search/)
+© [flYjet] Ltd 2020

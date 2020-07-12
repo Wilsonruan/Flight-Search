@@ -21,7 +21,7 @@ Results Page Screenshot
 
 
 ## Links
-Github URL: https://github.com/Wilsonruan/Flight-Search
+Github URL: https://github.com/Wilsonruan/Flight-Search/  
 Website URL: https://wilsonruan.github.io/Flight-Search/
 
 ## License

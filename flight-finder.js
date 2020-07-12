@@ -217,14 +217,16 @@ function flightFinderRoundTrip(queryString) {
 
 // One-way function
 function flightFinderOneWayW(queryString) {
-  const originPlace = queryString['from-location-code'];
-  const destinationPlace = queryString['to-location-code'];
+  const originPlaceCode = queryString['from-location-code'].toUpperCase();
+  const destinationPlaceCode = queryString['to-location-code'].toUpperCase();
+  const originPlace = getStripped(queryString['from-location']);
+  const destinationPlace = getStripped(queryString['to-location']);
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const countryCode = queryString.currencyList;
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}`;
   $.ajax({
     async: true,
     crossDomain: true,
@@ -238,18 +240,20 @@ function flightFinderOneWayW(queryString) {
     },
   }).then((response) => {
     const resultTitle = `Outbound Date: ${outboundDate}`;
-    resultsFlight(response, resultTitle, 'only-outbound');
+    resultsFlight(response, resultTitle, 'only-outbound', originPlaceCode, destinationPlaceCode, originPlace, destinationPlace);
   });
 }
 
 function flightFinderReturnTripW(queryString) {
-  const originPlace = queryString['to-location-code'];
-  const destinationPlace = queryString['from-location-code'];
+  const originPlaceCode = queryString['to-location-code'].toUpperCase();
+  const destinationPlaceCode = queryString['from-location-code'].toUpperCase();
+  const originPlace = getStripped(queryString['to-location']);
+  const destinationPlace = getStripped(queryString['from-location']);
   const outboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
   const countryCode = queryString.currencyList;
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}`;
   $.ajax({
     url: queryURL,
     method: 'GET',
@@ -261,21 +265,21 @@ function flightFinderReturnTripW(queryString) {
     },
   }).then((response) => {
     const resultTitle = `Return Date: ${outboundDate}`;
-    resultsFlight(response, resultTitle, 'only-inbound');
+    resultsFlight(response, resultTitle, 'only-inbound', originPlaceCode, destinationPlaceCode, originPlace, destinationPlace);
   });
 }
 
-function resultsFlight(response, resultTitle, resultTypeId) {
+function resultsFlight(response, resultTitle, resultTypeId, originPlaceCode, destinationPlaceCode, originPlace, destinationPlace) {
   for (let i = 0; i < response.Quotes.length; i++) {
     // adding airlines name
     const flightPrice = response.Quotes[i].MinPrice;
     const currencySymbol = response.Currencies[0].Symbol;
     const currencyCode = response.Currencies[0].Code;
 
-    const source = response.Places[1].Name;
-    const sourceCode = response.Places[1].IataCode;
-    const destination = response.Places[0].Name;
-    const destinationCode = response.Places[0].IataCode;
+    const source = originPlace;
+    const sourceCode = originPlaceCode;
+    const destination = destinationPlace;
+    const destinationCode = destinationPlaceCode;
 
     const carrierId = response.Quotes[i].OutboundLeg.CarrierIds[0];
     const carrierName = getCarrierName(response.Carriers, carrierId);

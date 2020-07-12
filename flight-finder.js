@@ -226,12 +226,20 @@ function calcDistance(sourceCode, destinationCode, cardBody) {
     };
     $.ajax(settings2).done((response2) => {
       const distance = getDistanceFromLatLonInKm(response1.latitude, response1.longitude, response2.latitude, response2.longitude);
-      const timeTakenInMin = (distance / 850).toFixed(1);
+      const timeTakenInMin = ((distance / 850) + 0.7).toFixed(1);
       cardBody.append(`<p>Distance: ${Math.round(distance)} Km </p>`);
-      cardBody.append(`<p>Travel time: ${timeTakenInMin} hrs </p>`);
+      const timeIncludingmin = minTommss(timeTakenInMin);
+      cardBody.append(`<p>Travel time: ${timeIncludingmin} hrs </p>`);
     });
   });
 }
+
+function minTommss(minutes){
+  var sign = minutes < 0 ? "-" : "";
+  var min = Math.floor(Math.abs(minutes));
+  var sec = Math.floor((Math.abs(minutes) * 60) % 60);
+  return sign + (min < 10 ? "0" : "") + min + ":" + (sec < 10 ? "0" : "") + sec;
+ }
 
 // One-way function
 function flightFinderOneWayW(queryString) {
@@ -314,6 +322,10 @@ function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
     var directFlight = response.Quotes[i].Direct;
     const currencySymbol = response.Currencies[0].Symbol;
     const currencyCode = response.Currencies[0].Code;
+    const source = response.Places[1].Name;
+    const sourceCode = response.Places[1].IataCode;
+    const destination = response.Places[0].Name;
+    const destinationCode = response.Places[0].IataCode;
     if (directFlight) {
       directFlight = "Yes";
     } else {
@@ -321,8 +333,11 @@ function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
     }
     cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
     cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
+    cardBody.append(`<p>${sourceCode} &#x27F6; ${destinationCode} </p>`);
+    cardBody.append(`<p> ${source}  &#x27F6; ${destination} </p>`);
+    calcDistance(sourceCode, destinationCode, cardBody);
   }
-  calcDistance(originPlace, destinationPlace, cardBody);
+  c
 }
 
 function showNoResultFound () {

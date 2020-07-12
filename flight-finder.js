@@ -32,7 +32,6 @@ function flightFinderOneWay(queryString) {
   const destinationPlace = queryString['to-location-code'];
   const outboundDate = queryString['depart-from'];
   const countryName = queryString['country-name'];
-  // const currencyName = queryString['currency-name'];
   const countryCode = queryString['currencyList']
   const travelers = queryString['travelers']
   console.log(countryCode)
@@ -107,7 +106,6 @@ function flightFinderRoundTrip(queryString) {
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
-  // const currencyName = queryString['currency-name'];
   const countryCode = queryString['currencyList']
   const travelers = queryString['travelers']
   console.log(countryCode)
@@ -249,9 +247,9 @@ function flightFinderOneWayW(queryString) {
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
-  const currencyName = queryString['currency-name'];
+  const countryCode = queryString['currencyList']
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
   console.log(queryURL);
   $.ajax({
     async: true,
@@ -277,9 +275,9 @@ function flightFinderRoundTripW(queryString) {
   const destinationPlace = queryString['from-location-code'];
   const outboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
-  const currencyName = queryString['currency-name'];
+  const countryCode = queryString['currencyList']
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
   console.log(queryURL)
   $.ajax({
     url: queryURL,

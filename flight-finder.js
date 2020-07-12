@@ -32,14 +32,17 @@ function flightFinderOneWay(queryString) {
   const destinationPlace = queryString['to-location-code'];
   const outboundDate = queryString['depart-from'];
   const countryName = queryString['country-name'];
-  const countryCode = queryString['currencyList']
-  const travelers = queryString['travelers']
-  console.log(countryCode)
+
+  // const currencyName = queryString['currency-name'];
+  const { travelers } = queryString;
+  const travelers2 = travelers.replace('+', ' ');
+  const countryCode = queryString.currencyList;
+  console.log(countryCode);
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html('(One-Way)');
-  $('#origin-code').html(originPlace.toUpperCase());
-  $('#destination-code').html(destinationPlace.toUpperCase());
-  $('#travelers-results').html(travelers);
+  $('#origin-code').html(originPlace);
+  $('#destination-code').html(destinationPlace);
+  $('#travelers-results').html(travelers2)
 
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
   console.log(queryURL);
@@ -54,7 +57,7 @@ function flightFinderOneWay(queryString) {
   }).then((response) => {
     console.log(response);
     if (response.Quotes.length == 0) {
-      showNoResultFound ()
+      showNoResultFound();
     }
     for (let i = 0; i < response.Quotes.length; i += 1) {
       // adding airlines name
@@ -69,12 +72,12 @@ function flightFinderOneWay(queryString) {
       const currencySymbol = response.Currencies[0].Symbol;
       const currencyCode = response.Currencies[0].Code;
       // cardBody.append(`<p>Flight Price : ${currencySymbol}` `${bestPrice}` `${currencyCode} </p>`);
-      cardBody.append('<p>Flight Price : ' + currencySymbol + ' ' + bestPrice + ' ' + currencyCode + '</p>');
+      cardBody.append(`<p>Flight Price : ${currencySymbol} ${bestPrice} ${currencyCode}</p>`);
       const directFlight = response.Quotes[i].Direct;
       if (directFlight) {
-        cardBody.append(`<p>Direct Flight: Yes </p>`);
+        cardBody.append('<p>Direct Flight: Yes </p>');
       } else {
-        cardBody.append(`<p>Direct Flight: No </p>`);
+        cardBody.append('<p>Direct Flight: No </p>');
       }
       // adding carrier name & carrier code
       for (let i = 0; i < response.Carriers.length; i++) {
@@ -99,6 +102,38 @@ function flightFinderOneWay(queryString) {
   });
 }
 
+// calculate distance between src, destination using lat,long
+function calcDistance(sourceCode, destinationCode, cardBody) {
+  const settings1 = {
+    async: true,
+    crossDomain: true,
+    url: `https://airport-info.p.rapidapi.com/airport?iata=${sourceCode}`,
+    method: 'GET',
+    headers: {
+      'x-rapidapi-host': 'airport-info.p.rapidapi.com',
+      'x-rapidapi-key': 'b54c55a6edmsh6c049f7b3fa366fp145a1ajsna8fa9fa1eefb',
+    },
+  };
+  $.ajax(settings1).done((response1) => {
+    const settings2 = {
+      async: true,
+      crossDomain: true,
+      url: `https://airport-info.p.rapidapi.com/airport?iata=${destinationCode}`,
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': 'airport-info.p.rapidapi.com',
+        'x-rapidapi-key': 'b54c55a6edmsh6c049f7b3fa366fp145a1ajsna8fa9fa1eefb',
+      },
+    };
+    $.ajax(settings2).done((response2) => {
+      const distance = getDistanceFromLatLonInKm(response1.latitude, response1.longitude, response2.latitude, response2.longitude);
+      const timeTakenInHrs = (distance / 850).toFixed(1);
+      cardBody.append(`<p>Distance: ${Math.round(distance)} Km </p>`);
+      cardBody.append(`<p>Travel time: ${timeTakenInHrs} hrs </p>`);
+    });
+  });
+}
+
 // Round-trip function
 function flightFinderRoundTrip(queryString) {
   const originPlace = queryString['from-location-code'];
@@ -106,15 +141,18 @@ function flightFinderRoundTrip(queryString) {
   const outboundDate = queryString['depart-from'];
   const inboundDate = queryString['return-to'];
   const countryName = queryString['country-name'];
-  const countryCode = queryString['currencyList']
-  const travelers = queryString['travelers']
-  console.log(countryCode)
+
+  // const currencyName = queryString['currency-name'];
+  const countryCode = queryString.currencyList;
+  const { travelers } = queryString;
+  const travelers2 = travelers.replace('+', ' ');
+  console.log(countryCode);
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
-  $('#origin-code').html(originPlace.toUpperCase());
-  $('#destination-code').html(destinationPlace.toUpperCase());
-  $('#travelers-results').html(travelers);
-  
+  $('#origin-code').html(originPlace);
+  $('#destination-code').html(destinationPlace);
+  $('#travelers-results').html(travelers2);
+
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}/${inboundDate}`;
   $.ajax({
     url: queryURL,
@@ -138,14 +176,13 @@ function flightFinderRoundTrip(queryString) {
       const bestPrice = response.Quotes[i].MinPrice;
       const currencySymbol = response.Currencies[0].Symbol;
       const currencyCode = response.Currencies[0].Code;
-      cardBody.append('<p>Flight Price : ' + currencySymbol + ' ' + bestPrice + ' ' + currencyCode + '</p>');
+      cardBody.append(`<p>Flight Price : ${currencySymbol} ${bestPrice} ${currencyCode}</p>`);
       const directFlight = response.Quotes[i].Direct;
       if (directFlight) {
-        cardBody.append(`<p>Direct Flight: Yes </p>`);
+        cardBody.append('<p>Direct Flight: Yes </p>');
       } else {
-        cardBody.append(`<p>Direct Flight: No </p>`);
+        cardBody.append('<p>Direct Flight: No </p>');
       }
-      
 
       // Outbound details
       // adding carrier name & carrier code for outbound
@@ -153,8 +190,8 @@ function flightFinderRoundTrip(queryString) {
       for (let i = 0; i < response.Carriers.length; i++) {
         if (outboundCode === response.Carriers[i].CarrierId) {
           const airlineName = response.Carriers[i].Name;
-          cardBody.append(`<p>Airlines: ${airlineName}</p>`);
-          cardBody.append(`<p>Airline Code: ${outboundCode}</p>`);
+          cardBody.append(`<p>Carrier Name: ${airlineName}</p>`);
+          cardBody.append(`<p>Carrier ID: ${outboundCode}</p>`);
         }
       }
       // Source and destination details for Outbound
@@ -183,8 +220,8 @@ function flightFinderRoundTrip(queryString) {
       for (let i = 0; i < response.Carriers.length; i++) {
         if (inboundCode === response.Carriers[i].CarrierId) {
           const airlineName = response.Carriers[i].Name;
-          cardBody.append(`<p> Airlines: ${airlineName}</p>`);
-          cardBody.append(`<p> Airline Code: ${inboundCode}</p>`);
+          cardBody.append(`<p> Carrier Name: ${airlineName}</p>`);
+          cardBody.append(`<p> Carrier ID: ${inboundCode}</p>`);
         }
       }
       const originNameReturn = response.Places[0].Name;
@@ -225,6 +262,7 @@ function calcDistance(sourceCode, destinationCode, cardBody) {
     };
     $.ajax(settings2).done((response2) => {
       const distance = getDistanceFromLatLonInKm(response1.latitude, response1.longitude, response2.latitude, response2.longitude);
+
       const timeTakenInMin = ((distance / 850) + 0.7).toFixed(1);
       cardBody.append(`<p>Distance: ${Math.round(distance)} Km </p>`);
       const timeIncludingmin = minTommss(timeTakenInMin);
@@ -232,6 +270,7 @@ function calcDistance(sourceCode, destinationCode, cardBody) {
     });
   });
 }
+
 
 function minTommss(minutes){
   var sign = minutes < 0 ? "-" : "";
@@ -257,7 +296,7 @@ function flightFinderOneWayW(queryString) {
     url: queryURL,
     method: 'GET',
     headers: {
-      "Access-Control-Allow-Origin" : "*",
+      'Access-Control-Allow-Origin': '*',
       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
       'x-rapidapi-key': '8ee516d0d4msh56ee08c36447777p1f395djsn9a5475b18ac7',
       useQueryString: true,
@@ -265,11 +304,11 @@ function flightFinderOneWayW(queryString) {
   }).then((response) => {
     console.log(response);
 
-    const resultTitle = `Outbound Date: ${outboundDate}`;
-    resultsFlight (response, resultTitle);
+    const resultTitle = `Departure Date: ${outboundDate}`;
+    resultsFlight(response, resultTitle);
   });
 }
-
+// Round-trip function - Wilson
 function flightFinderRoundTripW(queryString) {
   const originPlace = queryString['to-location-code'];
   const destinationPlace = queryString['from-location-code'];
@@ -277,13 +316,15 @@ function flightFinderRoundTripW(queryString) {
   const countryName = queryString['country-name'];
   const countryCode = queryString['currencyList']
 
+
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${countryCode}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
   console.log(queryURL)
+
   $.ajax({
     url: queryURL,
     method: 'GET',
     headers: {
-      "Access-Control-Allow-Origin" : "*",
+      'Access-Control-Allow-Origin': '*',
       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
       'x-rapidapi-key': '8ee516d0d4msh56ee08c36447777p1f395djsn9a5475b18ac7',
       useQueryString: true,
@@ -291,14 +332,14 @@ function flightFinderRoundTripW(queryString) {
   }).then((response) => {
     console.log(response);
     if (response.Quotes.length == 0) {
-      showNoResultFound ()
+      showNoResultFound();
     }
-    const resultTitle = `Return Date: ${outboundDate}`;
-    resultsFlight (response, resultTitle, originPlace, destinationPlace);
+    const resultTitle = `Arrival Date: ${outboundDate}`;
+    resultsFlight(response, resultTitle, originPlace, destinationPlace);
   });
 }
 
-function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
+function resultsFlight(response, resultTitle, originPlace, destinationPlace) {
   for (let i = 0; i < response.Quotes.length; i++) {
     // adding airlines name
     const card = $('<div>');
@@ -318,7 +359,7 @@ function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
 
     // adding flight price
     const bestPrice = response.Quotes[i].MinPrice;
-    var directFlight = response.Quotes[i].Direct;
+    let directFlight = response.Quotes[i].Direct;
     const currencySymbol = response.Currencies[0].Symbol;
     const currencyCode = response.Currencies[0].Code;
     const source = response.Places[1].Name;
@@ -326,35 +367,40 @@ function resultsFlight (response, resultTitle, originPlace, destinationPlace) {
     const destination = response.Places[0].Name;
     const destinationCode = response.Places[0].IataCode;
     if (directFlight) {
-      directFlight = "Yes";
+      directFlight = 'Yes';
     } else {
-      directFlight = "No";
+      directFlight = 'No';
     }
     cardBody.append(`<p>Direct Flight : ${directFlight} </p>`);
     cardBody.append(`<p>Flight Price : ${currencySymbol}${bestPrice} ${currencyCode}</p>`);
+
     cardBody.append(`<p>${sourceCode} &#x27F6; ${destinationCode} </p>`);
     cardBody.append(`<p> ${source}  &#x27F6; ${destination} </p>`);
     calcDistance(sourceCode, destinationCode, cardBody);
+
   }
-  c
+  
 }
 
-function showNoResultFound () {
+function showNoResultFound() {
   const card = $('<div>');
   card.addClass('card m-5');
   card.appendTo('.flights-display');
-  card.append(`<p>No results were Found.</p>`);
+  card.append('<p>No results were Found.</p>');
 }
 
 $(document).ready(() => {
   const queryString = getUrlVars();
   const inboundDate = queryString['return-to'];
   if (inboundDate) {
+    // flightFinderOneWay(queryString);
     flightFinderRoundTrip(queryString);
-    flightFinderOneWayW(queryString);
     flightFinderRoundTripW(queryString);
+    flightFinderOneWayW(queryString);
+    // flightFinderRoundTripNew(queryString);
   } else {
     flightFinderOneWay(queryString);
+    flightFinderOneWayW(queryString);
+
   }
 });
-

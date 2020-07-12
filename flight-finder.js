@@ -35,8 +35,8 @@ function flightFinderOneWay(queryString) {
   const currencyName = queryString['currency-name'];
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html('(One-Way)');
-  $('#origin-code').html(originPlace);
-  $('#destination-code').html(destinationPlace);
+  $('#origin-code').html(originPlace.toUpperCase());
+  $('#destination-code').html(destinationPlace.toUpperCase());
 
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}`;
   console.log(queryURL);
@@ -97,8 +97,8 @@ function flightFinderRoundTrip(queryString) {
   const currencyName = queryString['currency-name'];
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
-  $('#origin-code').html(originPlace);
-  $('#destination-code').html(destinationPlace);
+  $('#origin-code').html(originPlace.toUpperCase());
+  $('#destination-code').html(destinationPlace.toUpperCase());
   const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/${countryName}/${currencyName}/en-US/${originPlace}/${destinationPlace}/${outboundDate}/${inboundDate}`;
   $.ajax({
     url: queryURL,

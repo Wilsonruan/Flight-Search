@@ -35,7 +35,7 @@ function calcDistance(sourceCode, destinationCode, cardBody) {
     method: 'GET',
     headers: {
       'x-rapidapi-host': 'airport-info.p.rapidapi.com',
-      'x-rapidapi-key': 'b54c55a6edmsh6c049f7b3fa366fp145a1ajsna8fa9fa1eefb',
+      'x-rapidapi-key': 'e5c89db57bmshf9a894a75ed23f8p1123e0jsnfffe98b83487',
     },
   };
   $.ajax(settings1).done((response1) => {
@@ -46,7 +46,7 @@ function calcDistance(sourceCode, destinationCode, cardBody) {
       method: 'GET',
       headers: {
         'x-rapidapi-host': 'airport-info.p.rapidapi.com',
-        'x-rapidapi-key': 'b54c55a6edmsh6c049f7b3fa366fp145a1ajsna8fa9fa1eefb',
+        'x-rapidapi-key': 'e5c89db57bmshf9a894a75ed23f8p1123e0jsnfffe98b83487',
       },
     };
     $.ajax(settings2).done((response2) => {
@@ -91,16 +91,18 @@ function getStripped(airportName) {
 // Round-trip function
 function flightFinderRoundTrip(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, inboundDate, countryName, countryCode, idFinder) {
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}/${inboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/${idFinder}/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}/${inboundDate}`;
+  console.log(queryURL)
   $.ajax({
     url: queryURL,
     method: 'GET',
     headers: {
       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
-      'x-rapidapi-key': 'b54c55a6edmsh6c049f7b3fa366fp145a1ajsna8fa9fa1eefb',
+      'x-rapidapi-key': 'e5c89db57bmshf9a894a75ed23f8p1123e0jsnfffe98b83487',
       useQueryString: true,
     },
   }).then((response) => {
+    console.log(response)
     if (response.Quotes.length === 0) {
       showNoResultFound();
     }
@@ -149,7 +151,8 @@ function flightFinderRoundTrip(originPlaceCode, originPlace, destinationPlaceCod
 // One-way function
 function flightFinderOneWay(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, inboundDate, countryName, countryCode, idFinder) {
 
-  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browseroutes/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}`;
+  const queryURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/${idFinder}/v1.0/${countryName}/${countryCode}/en-US/${originPlaceCode}/${destinationPlaceCode}/${outboundDate}`;
+  console.log(queryURL)
   $.ajax({
     async: true,
     crossDomain: true,
@@ -158,10 +161,11 @@ function flightFinderOneWay(originPlaceCode, originPlace, destinationPlaceCode, 
     headers: {
       'Access-Control-Allow-Origin': '*',
       'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
-      'x-rapidapi-key': '8ee516d0d4msh56ee08c36447777p1f395djsn9a5475b18ac7',
+      'x-rapidapi-key': 'e5c89db57bmshf9a894a75ed23f8p1123e0jsnfffe98b83487',
       useQueryString: true,
     },
   }).then((response) => {
+    console.log(response)
     if (response.Quotes.length === 0) {
       showNoResultFound();
     }
@@ -178,7 +182,7 @@ function flightFinderOneWay(originPlaceCode, originPlace, destinationPlaceCode, 
   
       const card = $('<div>');
       card.addClass('card m-5');
-      card.appendTo(`#${idFinder}`);
+      card.appendTo(`#only-outbound`);
       const cardBody = $('<div>');
       cardBody.appendTo(card);
   
@@ -204,18 +208,19 @@ $(document).ready(() => {
   const countryName = queryString['country-name'];
   const countryCode = queryString.currencyList;
   const travelers = getStripped(queryString.travelers);
+  const flexibleTrue = queryString['flexible-code']
 
   $('#depart-date').html(outboundDate);
   $('#arrival-date').html(inboundDate);
   $('#origin-code').html(originPlaceCode);
   $('#destination-code').html(destinationPlaceCode);
   $('#travelers-results').html(travelers);
-  let idFinder = 'only-outbound';
+  console.log(flexibleTrue)
   let resultTitle = `Departure Date: `;
   if (inboundDate) {
-    flightFinderRoundTrip(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, inboundDate, countryName, countryCode, idFinder);
+    flightFinderRoundTrip(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, inboundDate, countryName, countryCode, flexibleTrue);
   } else {
     $('#arrival-date').html('(One-Way)');
-    flightFinderOneWay(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, resultTitle, countryName, countryCode, idFinder);
+    flightFinderOneWay(originPlaceCode, originPlace, destinationPlaceCode, destinationPlace, outboundDate, resultTitle, countryName, countryCode, flexibleTrue);
   }
 });

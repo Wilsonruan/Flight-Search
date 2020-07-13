@@ -12,11 +12,4 @@ $(document).ready(() => {
       $('#return-to').attr('placeholder', 'Returning..')
     }
   })
-  $('#flexible').click(function () {
-    if ($('#flexible').prop('checked')) {
-      $('#flexible-code').val('browseroutes');
-    } else {
-      $('#flexible-code').val('browsequotes');
-    }
-  })
 });
